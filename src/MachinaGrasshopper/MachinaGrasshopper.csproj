@@ -119,6 +119,7 @@
     <Compile Include="Robot\Version.cs" />
     <Compile Include="MachinaGrasshopperInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolAction\OnrobotRG6.cs" />
     <Compile Include="Utils\MachinaBridgeSocket.cs" />
     <Compile Include="Utils\TabProperties.cs" />
   </ItemGroup>
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Action.Acceleration.png" />
+    <None Include="Resources\ToolAction.RG6.png" />
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Action.ArmAngle.png" />
@@ -173,7 +175,7 @@
     <Content Include="Resources\Robot.Version.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Machina.NET\src\Machina\Machina.csproj">
+    <ProjectReference Include="..\..\..\Machina_NET_KUKA_Online\src\Machina\Machina.csproj">
       <Project>{15951838-f9d6-4988-a103-b7c72bfe81a2}</Project>
       <Name>Machina</Name>
     </ProjectReference>

@@ -82,7 +82,7 @@ namespace MachinaGrasshopper.Action
             }
             else
             {
-                Plane pl = Plane.Unset;
+                Rhino.Geometry.Plane pl = Rhino.Geometry.Plane.Unset;
 
                 if (!DA.GetData(0, ref pl)) return;
 

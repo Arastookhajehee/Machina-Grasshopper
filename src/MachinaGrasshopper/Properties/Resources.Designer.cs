@@ -19,6 +19,7 @@ namespace MachinaGrasshopper.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
+    // should I change this to 17 ??
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -446,6 +447,16 @@ namespace MachinaGrasshopper.Properties {
         internal static System.Drawing.Bitmap Robot_Version {
             get {
                 object obj = ResourceManager.GetObject("Robot_Version", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_RG6 {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_RG6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
