@@ -9,13 +9,12 @@ namespace MachinaGrasshopper.ToolAction
 {
     public class OnrobotRG6 : GH_Component
     {
-        bool relative = false;
         /// <summary>
         /// Initializes a new instance of the OnrobotRG6 class.
         /// </summary>
         public OnrobotRG6() : base(
             "OnrobotRG6",
-            "RG6",
+            "OnrobotRG6",
             "Controls Onrobot RG6 two finger Gripper",
             "Machina",
             "ToolAction")
@@ -31,10 +30,7 @@ namespace MachinaGrasshopper.ToolAction
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
 
-            pManager.AddNumberParameter("fingerDistance", "distance", "Gripper Finger Distance in (mm)", GH_ParamAccess.item, 75);
-            pManager.AddNumberParameter("objectWeight", "weight", "the weight of the picked up object in (kg)", GH_ParamAccess.item, 0);
-            pManager.AddTextParameter("runMode", "mode", "'inplace' for stationary gripper finger action. \n" +
-                                                       "'moving for finger action not stopping while the robot moves.", GH_ParamAccess.item, "inplace");
+            pManager.AddNumberParameter("Value", "V", "Gripper Finger Distance in (mm)", GH_ParamAccess.item, 0);
 
         }
 
@@ -52,38 +48,12 @@ namespace MachinaGrasshopper.ToolAction
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            double distance = 0;
-            double weight = 0;
-            string mode = "inplace";
+            double val = 0;
+            bool tool = false;
 
-            if (!DA.GetData(0, ref distance)) return;
-            if (!DA.GetData(1, ref weight)) return;
-            if (!DA.GetData(2, ref mode)) return;
+            if (!DA.GetData(0, ref val)) return;
 
-            GripperRunStop runMode = mode == "inplace" ? GripperRunStop.Inplace : GripperRunStop.Moving;
-
-            DA.SetData(0, new ActionRG6Gripper(GripperType.Analouge, distance, weight, runMode, relative));
-
-            this.Message = relative ? "Relative" : "Absolute";
-        }
-
-        // http://james-ramsden.com/append-menu-items-to-grasshopper-components-with-c/
-        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
-        {
-            base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "Absolute", Absolute_Menu);
-            Menu_AppendItem(menu, "Relative", Relative_Menu);
-        }
-
-        private void Absolute_Menu(object sender, EventArgs e)
-        {
-            relative = false;
-            this.ExpireSolution(true);
-        }
-        private void Relative_Menu(object sender, EventArgs e)
-        {
-            relative = true;
-            this.ExpireSolution(true);
+            DA.SetData(0, new ActionIOAnalog("10000", val, tool));
         }
     }
 }
