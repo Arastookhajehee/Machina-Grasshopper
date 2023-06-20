@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MachinaGrasshopper</RootNamespace>
     <AssemblyName>MachinaGrasshopper</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GH_IO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
       <HintPath>..\packages\Grasshopper.0.9.76\lib\net35\GH_IO.dll</HintPath>
@@ -52,8 +55,12 @@
       <HintPath>..\packages\Grasshopper.0.9.76\lib\net35\Grasshopper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="RhinoCommon, Version=5.1.30000.16, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoCommon.5.12.50810.13095\lib\net35\RhinoCommon.dll</HintPath>
+    <Reference Include="RhinoCommon">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Rhino 7\System\RhinoCommon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Robots">
+      <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\packages\7.0\Robots\1.6.5\Robots.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -119,7 +126,8 @@
     <Compile Include="Robot\Version.cs" />
     <Compile Include="MachinaGrasshopperInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolAction\OnrobotRG6.cs" />
+    <Compile Include="UTokyo\MachinaToRobots.cs" />
+    <Compile Include="UTokyo\OnrobotRG6.cs" />
     <Compile Include="Utils\MachinaBridgeSocket.cs" />
     <Compile Include="Utils\TabProperties.cs" />
   </ItemGroup>
@@ -167,6 +175,7 @@
     <Content Include="Resources\Bridge.Send.png" />
     <Content Include="Resources\Machina.Head.png" />
     <Content Include="Resources\Machina.Robot.png" />
+    <None Include="Resources\MachinaToRobots.png" />
     <Content Include="Resources\Program.Compile.png" />
     <Content Include="Resources\Program.Display.png" />
     <Content Include="Resources\Program.Save.png" />

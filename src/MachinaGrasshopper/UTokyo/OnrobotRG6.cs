@@ -18,7 +18,7 @@ namespace MachinaGrasshopper.ToolAction
             "RG6",
             "Controls Onrobot RG6 two finger Gripper",
             "Machina",
-            "ToolAction")
+            "UTokyo")
         { }
 
         //public override GH_Exposure Exposure => GH_Exposure.quinary;
@@ -68,22 +68,22 @@ namespace MachinaGrasshopper.ToolAction
         }
 
         // http://james-ramsden.com/append-menu-items-to-grasshopper-components-with-c/
-        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
-        {
-            base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "Absolute", Absolute_Menu);
-            Menu_AppendItem(menu, "Relative", Relative_Menu);
-        }
+        //protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        //{
+        //    base.AppendAdditionalComponentMenuItems(menu);
+        //    Menu_AppendItem(menu, "Absolute", Absolute_Menu);
+        //    Menu_AppendItem(menu, "Relative", Relative_Menu);
+        //}
 
-        private void Absolute_Menu(object sender, EventArgs e)
-        {
-            relative = false;
-            this.ExpireSolution(true);
-        }
-        private void Relative_Menu(object sender, EventArgs e)
-        {
-            relative = true;
-            this.ExpireSolution(true);
-        }
+        //private void Absolute_Menu(object sender, EventArgs e)
+        //{
+        //    relative = false;
+        //    this.ExpireSolution(true);
+        //}
+        //private void Relative_Menu(object sender, EventArgs e)
+        //{
+        //    relative = true;
+        //    this.ExpireSolution(true);
+        //}
     }
 }
