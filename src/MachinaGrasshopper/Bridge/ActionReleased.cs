@@ -12,6 +12,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 using MachinaGrasshopper.GH_Utils;
+using WebSocketSharp;
 
 namespace MachinaGrasshopper.Bridge
 {
@@ -139,6 +140,15 @@ namespace MachinaGrasshopper.Bridge
             //    });
             //}
 
+            // adding temporary data placeholders before data validation to prevent null output
+            // by Arastoo Khajehee (https://github.com/Arastookhajehee)
+            string tempInstruction = _instruction;
+            Plane tempTcp = _tcp;
+            double?[] tempAxes = _axes;
+            double?[] tempExternalAxes = _externalAxes;
+            int tempPendingRelease = _pendingRelease;
+
+
             // NO GATED UPDATES
             // Parse message
             bool valid = ReceivedNewMessage(msg);
@@ -152,6 +162,14 @@ namespace MachinaGrasshopper.Bridge
                 DA.SetDataList(3, _externalAxes);
                 DA.SetData(4, _pendingRelease);
             }
+            else
+            {
+                DA.SetData(0, tempInstruction);
+                DA.SetData(1, tempTcp);
+                DA.SetDataList(2, tempAxes);
+                DA.SetDataList(3, tempExternalAxes);
+                DA.SetData(4, tempPendingRelease);
+            }
         }
 
         /// <summary>
@@ -161,6 +179,9 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private bool ReceivedNewMessage(string msg)
         {
+            // a better check for empty and null messages [Arastoo Khajehee (https://github.com/Arastookhajehee/)]
+            if (msg.IsNullOrEmpty()) return false;
+
             dynamic json = ser.Deserialize<dynamic>(msg);
             string eType = json["event"];
             if (eType.Equals(EVENT_NAME))

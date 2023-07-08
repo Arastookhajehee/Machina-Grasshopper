@@ -12,6 +12,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 using MachinaGrasshopper.GH_Utils;
+using WebSocketSharp;
 
 namespace MachinaGrasshopper.Bridge
 {
@@ -80,17 +81,6 @@ namespace MachinaGrasshopper.Bridge
             pManager.AddNumberParameter("PendingActionsOnDevice", "pendDev", "How many Actions are left on the device to be executed? This only accounts for the ones that have already been released to it.", GH_ParamAccess.item);
         }
 
-        //protected override void ExpireDownStreamObjects()
-        //{
-        //    if (_updateOutputs)
-        //    {
-        //        for (int i = 0; i < Params.Output.Count; i++)
-        //        {
-        //            Params.Output[i].ExpireSolution(false);
-        //        }
-        //    }
-        //}
-
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             // This stops the component from assigning nulls 
@@ -108,50 +98,22 @@ namespace MachinaGrasshopper.Bridge
                 return;
             }
 
-
-            // WHY WAS I DOING THIS, IF `LISTEN` ALREADY CAPS THE UPDATE?
-            // NOT NECESSARY, AND I THINK IT'S CAUSING ERRORS (GETTING STUCK AT 1 ACTION PENDING)
-            // --> Necessary so that when Listen fetches a non-execute action, it 
-            // doesn't trigger an update with empty/null outputs
-            // --> Anyway, temporarily disabling Expired solutions, it's just not working reliably.
-            // --> User will have to deal with flickery solutions
-
-            //// Output the values precomputed in the last solution.
-            //DA.SetData(0, _instruction);
-            //DA.SetData(1, _tcp);
-            //DA.SetDataList(2, _axes);
-            //DA.SetDataList(3, _externalAxes);
-            //DA.SetData(4, _pendingExecutionTotal);
-            //DA.SetData(5, _pendingExecutionOnDevice);
-            //DA.SetData(6, null);
-            //DA.SetData(7, _receivedMessages.Count);
-
-            //// If on second solution, stop checking.
-            //if (_updateOutputs)
-            //{
-            //    _updateOutputs = false;
-            //    return;
-            //}
-
-            //// Otherwise, search for updated values (only if new messages have been received 
-            //// by the Listener), and schedule a new solution if they are new.
-            //bool rescheduleRightAway = ReceivedNewMessage(msg);
-
-            //// If new data came in, schedule a new solution immediately and flag outputs to expire. 
-            //if (rescheduleRightAway)
-            //{
-            //    _updateOutputs = true;
-
-            //    this.OnPingDocument().ScheduleSolution(5, doc =>
-            //    {
-            //        this.ExpireSolution(false);
-            //    });
-            //}
+            // adding temporary data placeholders before data validation to prevent null output
+            // by Arastoo Khajehee (https://github.com/Arastookhajehee)
+            string tempInstructions = _instruction;
+            Plane tempPlane = _tcp;
+            double?[] tempAces = _axes;
+            double?[] tempExternalAxes = _externalAxes;
+            int tempPendingExecutionTotal = _pendingExecutionTotal;
+            int tempPendingExecutionOnDevice = _pendingExecutionOnDevice;
 
 
             // NO GATED UPDATES
             // Parse message
             bool valid = ReceivedNewMessage(msg);
+
+
+
 
             // Output the parsed values.
             if (valid)
@@ -163,6 +125,15 @@ namespace MachinaGrasshopper.Bridge
                 DA.SetData(4, _pendingExecutionTotal);
                 DA.SetData(5, _pendingExecutionOnDevice);
             }
+            else
+            {
+                DA.SetData(0, tempInstructions);
+                DA.SetData(1, tempPlane);
+                DA.SetDataList(2, tempAces);
+                DA.SetDataList(3, tempExternalAxes);
+                DA.SetData(4, tempPendingExecutionTotal);
+                DA.SetData(5, tempPendingExecutionOnDevice);
+            }
  
         }
 
@@ -173,7 +144,8 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private bool ReceivedNewMessage(string msg)
         {
-            if (msg == null) return false;
+            // a better check for empty and null messages [Arastoo Khajehee (https://github.com/Arastookhajehee/)]
+            if (msg.IsNullOrEmpty()) return false;
 
             try
             {
