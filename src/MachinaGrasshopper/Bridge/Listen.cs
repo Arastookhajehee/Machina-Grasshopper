@@ -57,12 +57,12 @@ namespace MachinaGrasshopper.Bridge
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Bridge", "MB", "The (websocket) object managing connection to the Machina Bridge", GH_ParamAccess.item);
-            
+
             // since we're updating this component directly from the connect component's WSClient.OnMessage event
             // we just need to output the current message of this component, which is also being updated with each event.
             // code simplification by Arastoo Khajehee (https://github.com/Arastookhajehee/)
-            //pManager.AddBooleanParameter("Autoupdate", "AUTO", "Keep listening while connection alive? The alternative is connecting a timer to this component.", GH_ParamAccess.item, true);
-            //pManager.AddIntegerParameter("Interval", "Int", "Refresh interval in milliseconds.", GH_ParamAccess.item, 66);
+            pManager.AddBooleanParameter("Autoupdate", "AUTO", "Keep listening while connection alive? The alternative is connecting a timer to this component.", GH_ParamAccess.item, true);
+            pManager.AddIntegerParameter("Interval", "Int", "Refresh interval in milliseconds.", GH_ParamAccess.item, 66);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -79,14 +79,37 @@ namespace MachinaGrasshopper.Bridge
             DA.DisableGapLogic();
 
             MachinaBridgeSocket ms = null;
+            bool autoUpdate = true;
+            int millis = 1000;
 
             if (!DA.GetData(0, ref ms)) return;
-            
-            //if (millis < 10) millis = 10;
+            if (!DA.GetData(1, ref autoUpdate)) return;
+            if (!DA.GetData(2, ref millis)) return;
+
+            if (!DA.GetData(0, ref ms)) return;
+
+            // Some sanity
+            if (millis < 10) millis = 10;
             if (ms == null || ms.socket == null || !ms.socket.IsAlive)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Not valid Bridge connection.");
                 return;
+            }
+
+            if (autoUpdate)
+            {
+                this.OnPingDocument().ScheduleSolution(millis, doc =>
+                {
+                    this.ExpireSolution(false);
+                });
+            }
+
+            // keeping the code to prevent internal problems that may rise with leaving the buffer filled with too much data
+            int size = ms.BufferSize();
+            // If there are messagges logged by the MS, trigger a chain of expiration updates
+            if (size > 0)
+            {
+                string temporaryMessage = ms.FetchFirst(true);
             }
 
             // since we're updating this component directly from the connect component's WSClient.OnMessage event
