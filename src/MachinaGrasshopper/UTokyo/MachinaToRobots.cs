@@ -241,7 +241,12 @@ namespace MachinaGrasshopper.UTokyo
                         }
 
                         break;
+                    case (Machina.ActionType.OnrobotRG6):
+                        Machina.ActionRG6Gripper rgGripper = (Machina.ActionRG6Gripper)action;
 
+                        currentTool = new Robots.Tool(currentTool.Tcp, currentTool.Name, currentTool.Weight, null, rgGripper.GripperMesh, null, false, null);
+
+                        break;
                     case (Machina.ActionType.Axes):
                         break; // WIP
                     /*
