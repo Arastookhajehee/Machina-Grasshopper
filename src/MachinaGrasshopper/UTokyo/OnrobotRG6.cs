@@ -33,11 +33,9 @@ namespace MachinaGrasshopper.ToolAction
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
 
-            pManager.AddNumberParameter("fingerDistance", "distance", "Gripper Finger Distance in (mm)", GH_ParamAccess.item, 75);
-            pManager.AddNumberParameter("objectWeight", "weight", "the weight of the picked up object in (kg)", GH_ParamAccess.item, 0);
-            pManager.AddTextParameter("runMode", "mode", "'inplace' for stationary gripper finger action. \n" +
-                                                       "'moving for finger action not stopping while the robot moves.", GH_ParamAccess.item, "inplace");
-            //pManager.AddMeshParameter("mesh", "mesh", "The mesh geometry of the object you are gripping", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("fingerDistance", "distance", "Gripper Finger Distance in (0-150mm) ", GH_ParamAccess.item, 75);
+            pManager.AddIntegerParameter("gripForce", "force", "the grip force to hold objects (25-120Newtons)", GH_ParamAccess.item, 80);
+
         }
 
         /// <summary>
@@ -54,19 +52,20 @@ namespace MachinaGrasshopper.ToolAction
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            double distance = 0;
-            double weight = 0;
-            string mode = "inplace";
+            int distance = 0;
+            int force = 0;
 
             if (!DA.GetData(0, ref distance)) return;
-            if (!DA.GetData(1, ref weight)) return;
-            if (!DA.GetData(2, ref mode)) return;
+            if (!DA.GetData(1, ref force)) return;
 
-            GripperRunStop runMode = mode == "inplace" ? GripperRunStop.Inplace : GripperRunStop.Moving;
 
-            DA.SetData(0, new ActionRG6Gripper(GripperType.Analouge, distance, weight, runMode, relative, GenerateMeshGeometry(distance)));
+            distance = distance < 0 ? 0 : distance;
+            distance = distance > 150 ? 150 : distance;
 
-            this.Message = relative ? "Relative" : "Absolute";
+            force = force < 25 ? 25 : force;
+            force = force > 120 ? 120 : force;
+
+            DA.SetData(0, new ActionRG6Gripper(distance, force));
         }
 
 
@@ -89,6 +88,7 @@ namespace MachinaGrasshopper.ToolAction
 
             distance = distance < 0 ? 0 : distance;
             distance = distance > 150 ? 150 : distance;
+
 
             int index = Convert.ToInt32(distance / 150 * 10);
 
