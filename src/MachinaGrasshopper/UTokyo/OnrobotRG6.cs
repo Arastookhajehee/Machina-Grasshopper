@@ -34,7 +34,8 @@ namespace MachinaGrasshopper.ToolAction
         {
 
             pManager.AddIntegerParameter("fingerDistance", "distance", "Gripper Finger Distance in (0-150mm) ", GH_ParamAccess.item, 75);
-            pManager.AddIntegerParameter("gripForce", "force", "the grip force to hold objects (25-120Newtons)", GH_ParamAccess.item, 80);
+            pManager.AddIntegerParameter("gripForce", "power_limit", "the grip power_limit to hold objects (25-120Newtons)", GH_ParamAccess.item, 80);
+            pManager.AddIntegerParameter("waitTime", "wait", "Wait after GripperTrigger in milliseconds", GH_ParamAccess.item, 2500);
 
         }
 
@@ -54,9 +55,11 @@ namespace MachinaGrasshopper.ToolAction
         {
             int distance = 0;
             int force = 0;
+            int wait = 0;
 
             if (!DA.GetData(0, ref distance)) return;
             if (!DA.GetData(1, ref force)) return;
+            if (!DA.GetData(2, ref wait)) return;
 
 
             distance = distance < 0 ? 0 : distance;
@@ -65,7 +68,7 @@ namespace MachinaGrasshopper.ToolAction
             force = force < 25 ? 25 : force;
             force = force > 120 ? 120 : force;
 
-            DA.SetData(0, new ActionRG6Gripper(distance, force));
+            DA.SetData(0, new ActionRG6Gripper(distance, force, wait));
         }
 
 
