@@ -241,4 +241,37 @@
   <data name="ToolAction_RG6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ToolAction.RG6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ToolAction_RG6_TCP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.RG6_TCP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_Loosen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_Loosen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_PickScrew" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_PickScrew.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_Premount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_Premount.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_Shank" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_Shank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_TCP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_TCP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_SD_Tighten" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.SD_Tighten.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_VG10_ChannelGrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.VG10_ChannelGrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_VG10_GripAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.VG10_GripAll.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_VG10_Release" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.VG10_Release.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolAction_VG10_TCP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ToolAction.VG10_TCP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

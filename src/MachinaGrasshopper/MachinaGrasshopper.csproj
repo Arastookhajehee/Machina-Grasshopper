@@ -133,6 +133,17 @@
     <Compile Include="UTokyo\OnrobotRG6.cs" />
     <Compile Include="Utils\MachinaBridgeSocket.cs" />
     <Compile Include="Utils\TabProperties.cs" />
+    <Compile Include="UTokyo\OnRobotRG6_TCP.cs" />
+    <Compile Include="UTokyo\OnRobotSD_Loosen.cs" />
+    <Compile Include="UTokyo\OnRobotSD_PickScrew.cs" />
+    <Compile Include="UTokyo\OnRobotSD_Premount.cs" />
+    <Compile Include="UTokyo\OnRobotSD_shank.cs" />
+    <Compile Include="UTokyo\OnRobotSD_TCP.cs" />
+    <Compile Include="UTokyo\OnRobotSD_Tighten.cs" />
+    <Compile Include="UTokyo\OnRobotVG10_ChannelGrip.cs" />
+    <Compile Include="UTokyo\OnRobotVG10_GripAll.cs" />
+    <Compile Include="UTokyo\OnRobotVG10_Release.cs" />
+    <Compile Include="UTokyo\OnRobotVG10_TCP.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -143,6 +154,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Action.Acceleration.png" />
+    <None Include="Resources\ToolAction.RG6_TCP.png" />
+    <None Include="Resources\ToolAction.SD_TCP.png" />
+    <None Include="Resources\ToolAction.VG10_TCP.png" />
+    <None Include="Resources\ToolAction.VG10_GripAll.png" />
+    <None Include="Resources\ToolAction.VG10_ChannelGrip.png" />
+    <None Include="Resources\ToolAction.VG10_Release.png" />
+    <None Include="Resources\ToolAction.SD_Tighten.png" />
+    <None Include="Resources\ToolAction.SD_Shank.png" />
+    <None Include="Resources\ToolAction.SD_Premount.png" />
+    <None Include="Resources\ToolAction.SD_PickScrew.png" />
+    <None Include="Resources\ToolAction.SD_Loosen.png" />
     <None Include="Resources\ToolAction.RG6.png" />
     <None Include="app.config" />
     <None Include="packages.config" />
