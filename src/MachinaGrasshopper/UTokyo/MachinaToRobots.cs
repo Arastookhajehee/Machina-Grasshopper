@@ -224,7 +224,7 @@ namespace MachinaGrasshopper.UTokyo
                         string toolName = defineTool.tool.name;
 
                         Plane toolPlane = new Plane(toolOrigin, toolOrientation.XAxis, toolOrientation.YAxis);
-                        Robots.Tool newTool = new Robots.Tool(toolPlane, toolName, weight, null, null, null, false, null);
+                        Robots.Tool newTool = new Robots.Tool(toolPlane, toolName, weight, null, currentTool.Mesh, null, false, null);
                         toolDefintions.Add(newTool);
                         break;
 
@@ -244,7 +244,7 @@ namespace MachinaGrasshopper.UTokyo
                     case (Machina.ActionType.OnrobotRG6):
                         Machina.ActionRG6Gripper rgGripper = (Machina.ActionRG6Gripper)action;
 
-                        currentTool = new Robots.Tool(currentTool.Tcp, currentTool.Name, currentTool.Weight, null, null, null, false, null);
+                        currentTool = new Robots.Tool(currentTool.Tcp, currentTool.Name, currentTool.Weight, null, currentTool.Mesh, null, false, null);
 
                         break;
                     case (Machina.ActionType.Axes):
