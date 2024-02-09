@@ -463,6 +463,26 @@ namespace MachinaGrasshopper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ShortCutAction_Home {
+            get {
+                object obj = ResourceManager.GetObject("ShortCutAction_Home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShortCutAction_Retract {
+            get {
+                object obj = ResourceManager.GetObject("ShortCutAction_Retract", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ToolAction_RG6 {
             get {
                 object obj = ResourceManager.GetObject("ToolAction_RG6", resourceCulture);
