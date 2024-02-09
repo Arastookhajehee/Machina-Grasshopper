@@ -129,6 +129,7 @@
     <Compile Include="Robot\Version.cs" />
     <Compile Include="MachinaGrasshopperInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UTokyo\HomeAxes.cs" />
     <Compile Include="UTokyo\MachinaToRobots.cs" />
     <Compile Include="UTokyo\OnrobotRG6.cs" />
     <Compile Include="Utils\MachinaBridgeSocket.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="UTokyo\OnRobotVG10_GripAll.cs" />
     <Compile Include="UTokyo\OnRobotVG10_Release.cs" />
     <Compile Include="UTokyo\OnRobotVG10_TCP.cs" />
+    <Compile Include="UTokyo\RetractPosition.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -154,6 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Action.Acceleration.png" />
+    <None Include="Resources\ShortCutAction.Retract.png" />
+    <None Include="Resources\ShortCutAction.Home.png" />
     <None Include="Resources\ToolAction.RG6_TCP.png" />
     <None Include="Resources\ToolAction.SD_TCP.png" />
     <None Include="Resources\ToolAction.VG10_TCP.png" />
