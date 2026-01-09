@@ -478,7 +478,7 @@ namespace MachinaGrasshopper.Graveyard
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddPlaneParameter("Plane", "P", "Target spatial orientation", GH_ParamAccess.item, Plane.WorldXY);
+            pManager.AddPlaneParameter("Plane", "P", "Target spatial orientation", GH_ParamAccess.item, Rhino.Geometry.Plane.WorldXY);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -488,7 +488,7 @@ namespace MachinaGrasshopper.Graveyard
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Plane pl = Plane.Unset;
+            Rhino.Geometry.Plane pl = Rhino.Geometry.Plane.Unset;
 
             if (!DA.GetData(0, ref pl)) return;
 
@@ -568,7 +568,7 @@ namespace MachinaGrasshopper.Graveyard
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddPlaneParameter("Plane", "P", "Target Plane to transform to", GH_ParamAccess.item, Plane.WorldXY);
+            pManager.AddPlaneParameter("Plane", "P", "Target Plane to transform to", GH_ParamAccess.item, Rhino.Geometry.Plane.WorldXY);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -578,7 +578,7 @@ namespace MachinaGrasshopper.Graveyard
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Plane pl = Plane.Unset;
+            Rhino.Geometry.Plane pl = Rhino.Geometry.Plane.Unset;
 
             if (!DA.GetData(0, ref pl)) return;
 
@@ -959,8 +959,8 @@ namespace MachinaGrasshopper.Graveyard
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Name", "T", "Tool name", GH_ParamAccess.item, "ToolExMachina");
-            pManager.AddPlaneParameter("BasePlane", "BP", "Base Plane where the Tool will be attached to the Robot", GH_ParamAccess.item, Plane.WorldXY);
-            pManager.AddPlaneParameter("TCPPlane", "TP", "Plane of the Tool Tip Center (TCP)", GH_ParamAccess.item, Plane.WorldXY);
+            pManager.AddPlaneParameter("BasePlane", "BP", "Base Plane where the Tool will be attached to the Robot", GH_ParamAccess.item, Rhino.Geometry.Plane.WorldXY);
+            pManager.AddPlaneParameter("TCPPlane", "TP", "Plane of the Tool Tip Center (TCP)", GH_ParamAccess.item, Rhino.Geometry.Plane.WorldXY);
             pManager.AddNumberParameter("Weight", "W", "Tool weight in Kg", GH_ParamAccess.item, 1);
         }
 
@@ -1170,7 +1170,7 @@ namespace MachinaGrasshopper.Graveyard
         private string _lastPosStr, _currPosStr;
         private object[] _lastOriObj, _currOriObj;
         private string _lastOriStr, _currOriStr;
-        private Plane _lastTCP;
+        private Rhino.Geometry.Plane _lastTCP;
 
         private object[] _lastAxesObj, _currAxesObj;
         private string _lastAxesStr, _currAxesStr;
@@ -1379,14 +1379,14 @@ namespace MachinaGrasshopper.Graveyard
             return list;
         }
 
-        private Plane PlaneFromDoubleObjects(object[] pos, object[] ori)
+        private Rhino.Geometry.Plane PlaneFromDoubleObjects(object[] pos, object[] ori)
         {
             if (pos == null || ori == null)
             {
-                return Plane.Unset;
+                return Rhino.Geometry.Plane.Unset;
             }
 
-            return new Plane(
+            return new Rhino.Geometry.Plane(
                 new Point3d(Convert.ToDouble(pos[0]), Convert.ToDouble(pos[1]), Convert.ToDouble(pos[2])),
                 new Vector3d(Convert.ToDouble(ori[0]), Convert.ToDouble(ori[1]), Convert.ToDouble(ori[2])),
                 new Vector3d(Convert.ToDouble(ori[3]), Convert.ToDouble(ori[4]), Convert.ToDouble(ori[5]))
