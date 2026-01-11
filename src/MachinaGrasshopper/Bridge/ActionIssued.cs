@@ -213,8 +213,27 @@ namespace MachinaGrasshopper.Bridge
                 );
             }
 
-            _axes = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["axes"]);
-            _externalAxes = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["extax"]);
+            JToken axesToken = json["axes"];
+            if (axesToken == null || axesToken.Type == JTokenType.Null)
+            {
+                _axes = null;
+            }
+            else
+            {
+                object[] axesArray = axesToken.ToObject<object[]>();
+                _axes = axesArray != null ? Machina.Utilities.Conversion.NullableDoublesFromObjects(axesArray) : null;
+            }
+
+            JToken extAxesToken = json["extax"];
+            if (extAxesToken == null || extAxesToken.Type == JTokenType.Null)
+            {
+                _externalAxes = null;
+            }
+            else
+            {
+                object[] extAxesArray = extAxesToken.ToObject<object[]>();
+                _externalAxes = extAxesArray != null ? Machina.Utilities.Conversion.NullableDoublesFromObjects(extAxesArray) : null;
+            }
         }
     }
 }
