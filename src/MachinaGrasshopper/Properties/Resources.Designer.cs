@@ -393,6 +393,16 @@ namespace MachinaGrasshopper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MachinaToRobots {
+            get {
+                object obj = ResourceManager.GetObject("MachinaToRobots", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Program_Compile {
             get {
                 object obj = ResourceManager.GetObject("Program.Compile", resourceCulture);
@@ -446,6 +456,146 @@ namespace MachinaGrasshopper.Properties {
         internal static System.Drawing.Bitmap Robot_Version {
             get {
                 object obj = ResourceManager.GetObject("Robot.Version", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShortCutAction_Home {
+            get {
+                object obj = ResourceManager.GetObject("ShortCutAction_Home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShortCutAction_Retract {
+            get {
+                object obj = ResourceManager.GetObject("ShortCutAction_Retract", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_RG6 {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_RG6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_RG6_TCP {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_RG6_TCP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_Loosen {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_Loosen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_PickScrew {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_PickScrew", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_Premount {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_Premount", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_Shank {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_Shank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_TCP {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_TCP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_SD_Tighten {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_SD_Tighten", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_VG10_ChannelGrip {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_VG10_ChannelGrip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_VG10_GripAll {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_VG10_GripAll", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_VG10_Release {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_VG10_Release", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolAction_VG10_TCP {
+            get {
+                object obj = ResourceManager.GetObject("ToolAction_VG10_TCP", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

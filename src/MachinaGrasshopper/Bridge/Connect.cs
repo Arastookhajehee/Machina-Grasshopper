@@ -10,6 +10,9 @@ using Rhino.Geometry;
 using Machina;
 using WebSocketSharp;
 using MachinaGrasshopper.Utils;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MachinaGrasshopper.Bridge
 {
@@ -29,6 +32,14 @@ namespace MachinaGrasshopper.Bridge
     //                                                                
     public class Connect : GH_Component
     {
+        private List<string> msgevents = new List<string>()
+        {
+        "action-executed",
+        "action-issued",
+        "action-released",
+        "motion-update"
+        };
+
         private MachinaBridgeSocket _ms;
 
         public Connect() : base(
@@ -128,6 +139,54 @@ namespace MachinaGrasshopper.Bridge
         private void Socket_OnMessage(object sender, MessageEventArgs e)
         {
             _ms.Log(e.Data);
+
+            // since the component is downstream, we can expire it's solution with every message the client receives
+            // using the params property of this component we can find out what type of components we're connected to
+            // since we can access them as class instance objects, we can push data to their **public** properties
+            // here the _latestMessage is a public string that we can re-write with every OnMessage event
+            // this allows us to bypass the DA.SetData method, which requires component expiration 
+            // new code by Arastoo Khajehee (https://github.com/Arastookhajehee/)
+            if (this.Params.Output[1].Recipients.Count != 0)
+            {
+                foreach (var item in this.Params.Output[1].Recipients)
+                {
+                    if (item.Attributes.Parent == null) continue;
+                    if(item.Attributes.Parent.DocObject.GetType().ToString() == "MachinaGrasshopper.Bridge.Send") continue;
+                    if (item.Attributes.Parent.DocObject.GetType().ToString() == "MachinaGrasshopper.Bridge.Listen") 
+                    {
+                        try
+                        {
+                            // using Newtonsoft.Json for ease of parsing
+                            JObject jsonObject = JObject.Parse(e.Data);
+                            string eType = (string)jsonObject["event"];
+
+                            if (msgevents.Contains(eType))
+                            {
+                                Listen listenComponent = (Listen)item.Attributes.Parent.DocObject;
+                                listenComponent._latestMessage = e.Data;
+                            }
+
+                            // expiring components needs to be in a shceduleSolution method to prevent
+                            // solution exiration errors and popups in Grasshopper
+                            Grasshopper.Instances.ActiveCanvas.Document.ScheduleSolution(1, doc => 
+                            {
+                                item.Attributes.Parent.DocObject.ExpireSolution(false);
+                            });
+                            
+
+                        }
+                        catch
+                        {
+                            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Parsing or component wiring problems!");
+                            return;
+                        }
+                        
+                    }
+ 
+                    
+                }
+            }
+
         }
 
         private void Socket_OnClose(object sender, CloseEventArgs e)

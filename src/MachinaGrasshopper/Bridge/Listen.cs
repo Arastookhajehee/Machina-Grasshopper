@@ -31,8 +31,14 @@ namespace MachinaGrasshopper.Bridge
     public class Listen : GH_Component
     {
 
-        private bool _updateOut;
-        private string _lastMsg;
+        //private bool _updateOut;
+        //private string _lastMsg;
+
+        // a public property can be updated from other components connected to this one
+        // without using the DA.SetData() method. it allows not to worry about expiring components
+        // and scheduling component runs extensively
+        // new code by Arastoo Khajehee (https://github.com/Arastookhajehee/)
+        public string _latestMessage = "";
 
         public Listen() : base(
             "Listen",
@@ -41,7 +47,7 @@ namespace MachinaGrasshopper.Bridge
             "Machina",
             "Bridge")
         {
-            _updateOut = true;
+            //_updateOut = true;
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override Guid ComponentGuid => new Guid("8281b3ed-8d72-4e0a-8d11-efecd3b49954");
@@ -50,6 +56,10 @@ namespace MachinaGrasshopper.Bridge
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Bridge", "MB", "The (websocket) object managing connection to the Machina Bridge", GH_ParamAccess.item);
+
+            // since we're updating this component directly from the connect component's WSClient.OnMessage event
+            // we just need to output the current message of this component, which is also being updated with each event.
+            // code simplification by Arastoo Khajehee (https://github.com/Arastookhajehee/)
             pManager.AddBooleanParameter("Autoupdate", "AUTO", "Keep listening while connection alive? The alternative is connecting a timer to this component.", GH_ParamAccess.item, true);
             pManager.AddIntegerParameter("Interval", "Int", "Refresh interval in milliseconds.", GH_ParamAccess.item, 66);
         }
@@ -74,7 +84,9 @@ namespace MachinaGrasshopper.Bridge
             if (!DA.GetData(0, ref ms)) return;
             if (!DA.GetData(1, ref autoUpdate)) return;
             if (!DA.GetData(2, ref millis)) return;
-            
+
+            if (!DA.GetData(0, ref ms)) return;
+
             // Some sanity
             if (millis < 10) millis = 10;
             if (ms == null || ms.socket == null || !ms.socket.IsAlive)
@@ -83,42 +95,6 @@ namespace MachinaGrasshopper.Bridge
                 return;
             }
 
-            // Output the last received message from the last cycle
-            DA.SetData(0, _lastMsg);
-
-            // Stop triggering expiration updates if the buffer is empty
-            int size = ms.BufferSize();
-            if (_updateOut && size == 0)
-            {
-                _updateOut = false;
-
-                // And go back to regular autoupdate
-                if (autoUpdate)
-                {
-                    this.OnPingDocument().ScheduleSolution(millis, doc => {
-                        this.ExpireSolution(false);
-                    });
-                }
-
-                return;
-            }
-            
-            // If there are messagges logged by the MS, trigger a chain of expiration updates
-            if (size > 0)
-            {
-                _updateOut = true;
-                _lastMsg = ms.FetchFirst(true);
-
-                // Schedule a new solution right away
-                this.OnPingDocument().ScheduleSolution(5, doc => 
-                {
-                    this.ExpireSolution(false);
-                });
-
-                return;
-            }
-
-            // Otherwise, back to regular autoupdate
             if (autoUpdate)
             {
                 this.OnPingDocument().ScheduleSolution(millis, doc =>
@@ -126,15 +102,19 @@ namespace MachinaGrasshopper.Bridge
                     this.ExpireSolution(false);
                 });
             }
-        }
 
-        protected override void ExpireDownStreamObjects()
-        {
-            // Only expire the output if it needs an update
-            if (_updateOut)
+            // keeping the code to prevent internal problems that may rise with leaving the buffer filled with too much data
+            int size = ms.BufferSize();
+            // If there are messagges logged by the MS, trigger a chain of expiration updates
+            if (size > 0)
             {
-                Params.Output[0].ExpireSolution(false);
+                string temporaryMessage = ms.FetchFirst(true);
             }
+
+            // since we're updating this component directly from the connect component's WSClient.OnMessage event
+            // we just need to output the current message of this component, which is also being updated with each event.
+            // code simplification by Arastoo Khajehee (https://github.com/Arastookhajehee/)
+            DA.SetData(0, _latestMessage);
         }
 
     }
