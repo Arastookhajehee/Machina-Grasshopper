@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Rhino.Geometry;
 using Grasshopper.Kernel;
@@ -43,7 +44,6 @@ namespace MachinaGrasshopper.Bridge
         private double?[] _externalAxes;
         private int _pendingRelease;
 
-        private JavaScriptSerializer ser;
 
         public ActionReleased() : base(
             "ActionReleased",
@@ -53,7 +53,6 @@ namespace MachinaGrasshopper.Bridge
             "Bridge")
         {
             _updateOutputs = true;
-            ser = new JavaScriptSerializer();
         }
 
         public override GH_Exposure Exposure => GH_Exposure.secondary;
@@ -161,22 +160,38 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private bool ReceivedNewMessage(string msg)
         {
-            dynamic json = ser.Deserialize<dynamic>(msg);
-            string eType = json["event"];
-            if (eType.Equals(EVENT_NAME))
+            try
             {
-                _id = json["id"];
-                if (_id != _prevId)
+                JObject json = JsonConvert.DeserializeObject<JObject>(msg);
+                if (json == null)
+                    return false;
+
+                string eType = json.Value<string>("event");
+                if (string.Equals(eType, EVENT_NAME, StringComparison.Ordinal))
                 {
-                    UpdateCurrentValues(json);
-                    _prevId = _id;
-                    return true;
+                    int id = json.Value<int>("id");
+                    if (id != _prevId)
+                    {
+                        _id = id;
+                        UpdateCurrentValues(json);
+                        _prevId = _id;
+                        return true;
+                    }
                 }
+            }
+            catch (JsonException)
+            {
+                // preserve previous silent-failure behavior
+            }
+            catch (Exception)
+            {
+                // preserve previous silent-failure behavior
             }
 
             // If here, values were not updated
             return false;
         }
+
 
         /// <summary>
         /// Parse most up-to-date values from parsed message.
@@ -187,8 +202,8 @@ namespace MachinaGrasshopper.Bridge
             // @TODO: make this more programmatic, tie it to ActionExecutedArgs props
             _instruction = json["last"];
 
-            var pos = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["pos"]);
-            var ori = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["ori"]);
+            var pos = Machina.Utilities.Conversion.ToNullableDoubles(json["pos"]);
+            var ori = Machina.Utilities.Conversion.ToNullableDoubles(json["ori"]);
             if (pos == null || ori == null)
             {
                 _tcp = Plane.Unset;

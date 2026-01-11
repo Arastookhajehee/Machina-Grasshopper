@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Rhino.Geometry;
 using Grasshopper.Kernel;
@@ -1027,7 +1028,7 @@ namespace MachinaGrasshopper.Graveyard
         private bool _updateOutputs;
         private int _lastRem, _currentRem;
         private string _lastAction, _currentAction;
-        private JavaScriptSerializer ser;
+        private JsonSerializer _serializer;
 
         public ActionCompleted() : base(
             "ActionCompleted",
@@ -1037,7 +1038,7 @@ namespace MachinaGrasshopper.Graveyard
             "Bridge")
         {
             _updateOutputs = true;
-            ser = new JavaScriptSerializer();
+            _serializer = new JsonSerializer();
         }
 
         public override GH_Exposure Exposure => GH_Exposure.hidden;
@@ -1135,12 +1136,12 @@ namespace MachinaGrasshopper.Graveyard
         /// <param name="msg"></param>
         private void UpdateCurrentValues(string msg)
         {
-            dynamic json = ser.Deserialize<dynamic>(msg);
-            string eType = json["event"];
+            JObject json = JObject.Parse(msg);
+            string eType = json["event"]?.ToString();
             if (eType.Equals("action-completed"))
             {
-                _currentRem = json["rem"];
-                _currentAction = json["last"];
+                _currentRem = json["rem"].Value<int>();
+                _currentAction = json["last"]?.ToString();
             }
         }
 
@@ -1181,7 +1182,7 @@ namespace MachinaGrasshopper.Graveyard
         private List<double?> _lastExternalAxes;
 
 
-        JavaScriptSerializer ser;
+        private JsonSerializer _serializer;
 
         public ExecutionUpdate() : base(
             "ExecutionUpdate",
@@ -1200,7 +1201,7 @@ namespace MachinaGrasshopper.Graveyard
             _lastAxes = new List<double?>();
             _lastExternalAxes = new List<double?>();
 
-            ser = new JavaScriptSerializer();
+            _serializer = new JsonSerializer();
         }
 
         public override GH_Exposure Exposure => GH_Exposure.hidden;
@@ -1329,24 +1330,24 @@ namespace MachinaGrasshopper.Graveyard
 
         private void UpdateCurrentValues(string msg)
         {
-            dynamic json = ser.Deserialize<dynamic>(msg);
-            string eType = json["event"];
+            JObject json = JObject.Parse(msg);
+            string eType = json["event"]?.ToString();
 
             // Search once for each event type if not found before
             if (eType.Equals("execution-update"))
             {
                 // Try get pose
-                _currPosObj = json["pos"];
-                _currOriObj = json["ori"];
+                _currPosObj = json["pos"]?.ToObject<object[]>();
+                _currOriObj = json["ori"]?.ToObject<object[]>();
                 _currPosStr = DoubleObjectArrayToString(_currPosObj);
                 _currOriStr = DoubleObjectArrayToString(_currOriObj);
 
                 // Try get axes
-                _currAxesObj = json["axes"];
+                _currAxesObj = json["axes"]?.ToObject<object[]>();
                 _currAxesStr = DoubleObjectArrayToString(_currAxesObj);
 
                 // Try get external axes
-                _currExtaxObj = json["extax"];
+                _currExtaxObj = json["extax"]?.ToObject<object[]>();
                 _currExtaxStr = DoubleObjectArrayToString(_currExtaxObj);
             }
         }

@@ -1,230 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug32</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DF70AC4A-7E9B-4827-A0DD-DA11C55168B0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MachinaGrasshopper</RootNamespace>
-    <AssemblyName>MachinaGrasshopper</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <!-- Select the framework(s) you wish to target.
+        Rhino 6: net45
+        Rhino 7: net48
+        Rhino 8 Windows: net48, net7.0, net7.0-windows, net7.0-windows10.0.22000.0, etc
+        Rhino 8 Mac: net7.0, net7.0-macos, net7.0-macos12.0, etc
+    -->
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <TargetExt>.gha</TargetExt>
+    <NoWarn>NU1701;NETSDK1086</NoWarn>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug32|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  
+  <PropertyGroup>
+    <!-- Specifies information for Assembly and Yak -->
+    <Version>1.0</Version>
+    <Title>MachinaGrasshopper</Title>
+    <Company>MachinaGrasshopper Authors</Company>
+    <Description>Description of MachinaGrasshopper</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="GH_IO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
-      <HintPath>..\packages\Grasshopper.0.9.76\lib\net35\GH_IO.dll</HintPath>
-    </Reference>
-    <Reference Include="Grasshopper, Version=1.0.0.20, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
-      <HintPath>..\packages\Grasshopper.0.9.76\lib\net35\Grasshopper.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="RhinoCommon, Version=5.1.30000.16, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoCommon.5.12.50810.13095\lib\net35\RhinoCommon.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="websocket-sharp">
-      <HintPath>assemblies\websocket-sharp.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Grasshopper" Version="8.25.25314.11001" ExcludeAssets="runtime" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="RhinoCommon" Version="8.25.25314.11001" />
+    <PackageReference Include="WebsocketSharp.Standard2" Version="2022.4.16.1520" />
+  </ItemGroup>
+  
+  <!-- For Windows only builds -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('-windows')) or $(TargetFramework.StartsWith('net4'))">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- Reference WinForms for .NET 7.0 on macOS -->
+  <ItemGroup Condition="!($(TargetFramework.Contains('-windows')) or $(TargetFramework.StartsWith('net4')))">
+    <!-- Rhino 8.11 and later you can use this -->
+    <!-- <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" /> -->
+    
+    <!-- Rhino 8.10 and earlier -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net48" Version="1.0.3" ExcludeAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" ExcludeAssets="runtime" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action\Acceleration.cs" />
-    <Compile Include="Action\ArmAngle.cs" />
-    <Compile Include="Action\CustomCode.cs" />
-    <Compile Include="Action\DefineTool.cs" />
-    <Compile Include="Action\ExternalAxis.cs" />
-    <Compile Include="Action\Extrude.cs" />
-    <Compile Include="Action\ExtrusionRate.cs" />
-    <Compile Include="Action\Temperature.cs" />
-    <Compile Include="Action\WriteAnalog.cs" />
-    <Compile Include="Action\WriteDigital.cs" />
-    <Compile Include="Action\DetachTool.cs" />
-    <Compile Include="Action\AttachTool.cs" />
-    <Compile Include="Action\Comment.cs" />
-    <Compile Include="Action\Message.cs" />
-    <Compile Include="Action\MotionMode.cs" />
-    <Compile Include="Action\Coordinates.cs" />
-    <Compile Include="Action\Axes.cs" />
-    <Compile Include="Action\PopSettings.cs" />
-    <Compile Include="Action\Precision.cs" />
-    <Compile Include="Action\PushSettings.cs" />
-    <Compile Include="Action\Speed.cs" />
-    <Compile Include="Action\Transform.cs" />
-    <Compile Include="Action\Rotate.cs" />
-    <Compile Include="Action\Move.cs" />
-    <Compile Include="Action\Wait.cs" />
-    <Compile Include="Bridge\ActionExecuted.cs" />
-    <Compile Include="Bridge\ActionExecutedGated.cs" />
-    <Compile Include="Bridge\ActionIssued.cs" />
-    <Compile Include="Bridge\ActionReleased.cs" />
-    <Compile Include="Bridge\Connect.cs" />
-    <Compile Include="Bridge\Listen.cs" />
-    <Compile Include="Bridge\MotionUpdate.cs" />
-    <Compile Include="Bridge\Send.cs" />
-    <Compile Include="GH_Utils\SmartUpdateComponentSamples.cs" />
-    <Compile Include="GH_Utils\GH_ComponentNames.cs" />
-    <Compile Include="GH_Utils\GH_InputParamProps.cs" />
-    <Compile Include="GH_Utils\GH_MutableComponent.cs" />
-    <Compile Include="GH_Utils\GH_MutableInputParamManager.cs" />
-    <Compile Include="GH_Utils\GH_Utils.cs" />
-    <Compile Include="Legacy\Graveyard.cs" />
-    <Compile Include="Program\Compile.cs" />
-    <Compile Include="Program\Display.cs" />
-    <Compile Include="Program\Save.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
+    <ProjectReference Include="..\..\..\Machina.NET\src\Machina\Machina.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Robot\Create.cs" />
-    <Compile Include="Robot\Logger.cs" />
-    <Compile Include="Robot\Version.cs" />
-    <Compile Include="MachinaGrasshopperInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\MachinaBridgeSocket.cs" />
-    <Compile Include="Utils\TabProperties.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Action.Acceleration.png" />
-    <None Include="app.config" />
-    <None Include="packages.config" />
-    <None Include="Resources\Action.ArmAngle.png" />
-    <Content Include="Resources\Action.AttachTool.png" />
-    <Content Include="Resources\Action.Axes.png" />
-    <Content Include="Resources\Action.Comment.png" />
-    <Content Include="Resources\Action.CustomCode.png" />
-    <Content Include="Resources\Action.DefineTool.png" />
-    <Content Include="Resources\Action.DetachTool.png" />
-    <Content Include="Resources\Action.ExternalAxis.png" />
-    <Content Include="Resources\Action.Extrude.png" />
-    <Content Include="Resources\Action.ExtrusionRate.png" />
-    <Content Include="Resources\Action.Message.png" />
-    <Content Include="Resources\Action.MotionMode.png" />
-    <Content Include="Resources\Action.Move.png" />
-    <Content Include="Resources\Action.PopSettings.png" />
-    <Content Include="Resources\Action.Precision.png" />
-    <Content Include="Resources\Action.PushSettings.png" />
-    <Content Include="Resources\Action.Rotate.png" />
-    <Content Include="Resources\Action.Speed.png" />
-    <Content Include="Resources\Action.Temperature.png" />
-    <Content Include="Resources\Action.Transform.png" />
-    <Content Include="Resources\Action.Wait.png" />
-    <Content Include="Resources\Action.WriteAnalog.png" />
-    <Content Include="Resources\Action.WriteDigital.png" />
-    <Content Include="Resources\Bridge.ActionExecuted.png" />
-    <Content Include="Resources\Bridge.ActionIssued.png" />
-    <Content Include="Resources\Bridge.ActionReleased.png" />
-    <Content Include="Resources\Bridge.Connect.png" />
-    <Content Include="Resources\Bridge.Listen.png" />
-    <Content Include="Resources\Bridge.MotionUpdate.png" />
-    <Content Include="Resources\Bridge.Send.png" />
-    <Content Include="Resources\Machina.Head.png" />
-    <Content Include="Resources\Machina.Robot.png" />
-    <Content Include="Resources\Program.Compile.png" />
-    <Content Include="Resources\Program.Display.png" />
-    <Content Include="Resources\Program.Save.png" />
-    <Content Include="Resources\Robot.Create.png" />
-    <Content Include="Resources\Robot.Logger.png" />
-    <Content Include="Resources\Robot.Version.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Machina.NET\src\Machina\Machina.csproj">
-      <Project>{15951838-f9d6-4988-a103-b7c72bfe81a2}</Project>
-      <Name>Machina</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
-Erase "$(TargetPath)"
 
-IF ($(ConfigurationName)) == (Debug) GOTO END
-cd $(ProjectDir)
-cd..
-cd..
-cd dist/nightly
-copy /y "$(TargetDir)Machina.dll" Machina.dll
-copy /y "$(TargetDir)$(ProjectName).gha" $(ProjectName).gha
-copy /y "$(TargetDir)websocket-sharp.dll" websocket-sharp.dll
-:END</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug32|AnyCPU' ">
-    <StartArguments>
-    </StartArguments>
-    <StartAction>Program</StartAction>
-    <StartProgram>c:\Users\jlx\32-bit\System\Rhino4.exe</StartProgram>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <FallbackCulture>en-US</FallbackCulture>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
-    <StartProgram>C:\Users\jlx\64-bit\System\Rhino.exe</StartProgram>
-    <StartArguments>
-    </StartArguments>
-    <StartAction>Program</StartAction>
-    <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <Import Project="..\packages\RhinoCommon.5.12.50810.13095\build\net35\RhinoCommon.targets" Condition="Exists('..\packages\RhinoCommon.5.12.50810.13095\build\net35\RhinoCommon.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\RhinoCommon.5.12.50810.13095\build\net35\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RhinoCommon.5.12.50810.13095\build\net35\RhinoCommon.targets'))" />
-    <Error Condition="!Exists('..\packages\Grasshopper.0.9.76\build\net35\Grasshopper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grasshopper.0.9.76\build\net35\Grasshopper.targets'))" />
-  </Target>
-  <Import Project="..\packages\Grasshopper.0.9.76\build\net35\Grasshopper.targets" Condition="Exists('..\packages\Grasshopper.0.9.76\build\net35\Grasshopper.targets')" />
 </Project>

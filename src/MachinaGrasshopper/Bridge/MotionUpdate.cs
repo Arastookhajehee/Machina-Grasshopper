@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Rhino.Geometry;
 using Grasshopper.Kernel;
@@ -33,7 +34,7 @@ namespace MachinaGrasshopper.Bridge
     {
         private const string EVENT_NAME = "motion-update";
         private const double SIMILARITY_EPSILON = 0.001;  // @TODO: use one of Machina's built-in?
-        
+
         // For new events, all outputs will be updated, even if some of them have the same value (like position might be repeated on a Wait action...).
         private bool _updateOutputs;
 
@@ -42,7 +43,6 @@ namespace MachinaGrasshopper.Bridge
         private double?[] _prevAxes, _axes;
         private double?[] _prevExternalxes, _externalAxes;
 
-        private JavaScriptSerializer ser;
 
         public MotionUpdate() : base(
             "MotionUpdate",
@@ -52,7 +52,6 @@ namespace MachinaGrasshopper.Bridge
             "Bridge")
         {
             _updateOutputs = true;
-            ser = new JavaScriptSerializer();
         }
 
         public override GH_Exposure Exposure => GH_Exposure.secondary;
@@ -131,24 +130,39 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private bool ReceivedNewMessage(string msg)
         {
-            dynamic json = ser.Deserialize<dynamic>(msg);
-            string eType = json["event"];
-            if (eType.Equals(EVENT_NAME))
+            try
             {
-                UpdateCurrentValues(json);
+                JObject json = JsonConvert.DeserializeObject<JObject>(msg);
+                if (json == null)
+                    return false;
 
-                // If values are new, schedule new solution
-                if (!Machina.Utilities.Numeric.AreSimilar(_axes, _prevAxes, SIMILARITY_EPSILON) ||
-                    !Machina.Utilities.Numeric.AreSimilar(_externalAxes, _externalAxes, SIMILARITY_EPSILON) ||
-                    !GH_Helpers.AreSimilar(_tcp, _prevTcp, SIMILARITY_EPSILON))  // If all axes are the same, can the TCP have changed? Is this check redundant?
+                string eType = json.Value<string>("event");
+                if (string.Equals(eType, EVENT_NAME, StringComparison.Ordinal))
                 {
-                    return true;
+                    UpdateCurrentValues(json);
+
+                    // If values are new, schedule new solution
+                    if (!Machina.Utilities.Numeric.AreSimilar(_axes, _prevAxes, SIMILARITY_EPSILON) ||
+                        !Machina.Utilities.Numeric.AreSimilar(_externalAxes, _externalAxes, SIMILARITY_EPSILON) ||
+                        !GH_Helpers.AreSimilar(_tcp, _prevTcp, SIMILARITY_EPSILON)) // TCP change check
+                    {
+                        return true;
+                    }
                 }
+            }
+            catch (JsonException)
+            {
+                // preserve previous silent-failure behavior
+            }
+            catch (Exception)
+            {
+                // preserve previous silent-failure behavior
             }
 
             // If here, values were not updated
             return false;
         }
+
 
         /// <summary>
         /// Parse most up-to-date values from parsed message.
@@ -156,8 +170,8 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private void UpdateCurrentValues(dynamic json)
         {
-            var pos = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["pos"]);
-            var ori = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["ori"]);
+            var pos = Machina.Utilities.Conversion.ToNullableDoubles(json["pos"]);
+            var ori = Machina.Utilities.Conversion.ToNullableDoubles(json["ori"]);
             if (pos == null || ori == null)
             {
                 _tcp = Plane.Unset;

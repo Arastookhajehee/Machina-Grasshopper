@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Rhino.Geometry;
 using Grasshopper.Kernel;
@@ -48,8 +49,6 @@ namespace MachinaGrasshopper.Bridge
         private double?[] _axes;
         private double?[] _externalAxes;
 
-        private JavaScriptSerializer _serializer;
-
         public ActionExecutedGated() : base(
             "ActionExecutedGated",
             "ActionExecutedGated",
@@ -58,7 +57,6 @@ namespace MachinaGrasshopper.Bridge
             "Bridge")
         {
             //_updateOutputs = true;
-            _serializer = new JavaScriptSerializer();
             _receivedMessages = new List<string>();
         }
 
@@ -109,15 +107,15 @@ namespace MachinaGrasshopper.Bridge
             DA.GetData(0, ref msg);
 
             // Add message to list
-            if (msg != null)
-            {
-                dynamic json = _serializer.Deserialize<dynamic>(msg);
-                string eType = json["event"];
-                if (eType.Equals(EVENT_NAME))
-                {
-                    
-                }
-            }
+            // if (msg != null)
+            // {
+            //     dynamic json = _serializer.Deserialize<dynamic>(msg);
+            //     string eType = json["event"];
+            //     if (eType.Equals(EVENT_NAME))
+            //     {
+
+            //     }
+            // }
 
 
 
@@ -130,25 +128,41 @@ namespace MachinaGrasshopper.Bridge
         /// <param name="msg"></param>
         private bool ReceivedNewMessage(string msg)
         {
-            if (msg == null) return false;
+            if (msg == null)
+                return false;
 
-            dynamic json = _serializer.Deserialize<dynamic>(msg);
-            string eType = json["event"];
-            if (eType.Equals(EVENT_NAME))
+            try
             {
-                _id = json["id"];
-                if (_id != _prevId)
+                JObject json = JsonConvert.DeserializeObject<JObject>(msg);
+                if (json == null)
+                    return false;
+
+                string eType = json.Value<string>("event");
+                if (string.Equals(eType, EVENT_NAME, StringComparison.Ordinal))
                 {
-                    //_receivedMessages.Add(msg);
-                    UpdateCurrentValues(json);
-                    _prevId = _id;
-                    return true;
+                    int id = json.Value<int>("id");
+                    if (id != _prevId)
+                    {
+                        _id = id;
+                        UpdateCurrentValues(json);
+                        _prevId = _id;
+                        return true;
+                    }
                 }
+            }
+            catch (JsonException)
+            {
+                // swallow JSON errors to preserve original behavior
+            }
+            catch (Exception)
+            {
+                // swallow unexpected errors to preserve original behavior
             }
 
             // If here, values were not updated
             return false;
         }
+
 
         /// <summary>
         /// Parse most up-to-date values from parsed message.
@@ -159,8 +173,8 @@ namespace MachinaGrasshopper.Bridge
             // @TODO: make this more programmatic, tie it to ActionExecutedArgs props
             _instruction = json["last"];
 
-            var pos = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["pos"]);
-            var ori = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["ori"]);
+            var pos = Machina.Utilities.Conversion.ToNullableDoubles(json["pos"]);
+            var ori = Machina.Utilities.Conversion.ToNullableDoubles(json["ori"]);
             if (pos == null || ori == null)
             {
                 _tcp = Plane.Unset;

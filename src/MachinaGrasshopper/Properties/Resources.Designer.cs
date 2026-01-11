@@ -65,7 +65,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Acceleration {
             get {
-                object obj = ResourceManager.GetObject("Action_Acceleration", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Acceleration", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_ArmAngle {
             get {
-                object obj = ResourceManager.GetObject("Action_ArmAngle", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.ArmAngle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,7 +85,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_AttachTool {
             get {
-                object obj = ResourceManager.GetObject("Action_AttachTool", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.AttachTool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +95,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Axes {
             get {
-                object obj = ResourceManager.GetObject("Action_Axes", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Axes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Comment {
             get {
-                object obj = ResourceManager.GetObject("Action_Comment", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Comment", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -115,7 +115,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_CustomCode {
             get {
-                object obj = ResourceManager.GetObject("Action_CustomCode", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.CustomCode", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -125,7 +125,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_DefineTool {
             get {
-                object obj = ResourceManager.GetObject("Action_DefineTool", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.DefineTool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -135,7 +135,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_DetachTool {
             get {
-                object obj = ResourceManager.GetObject("Action_DetachTool", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.DetachTool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -145,7 +145,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_ExternalAxis {
             get {
-                object obj = ResourceManager.GetObject("Action_ExternalAxis", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.ExternalAxis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -155,7 +155,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Extrude {
             get {
-                object obj = ResourceManager.GetObject("Action_Extrude", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Extrude", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -165,7 +165,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_ExtrusionRate {
             get {
-                object obj = ResourceManager.GetObject("Action_ExtrusionRate", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.ExtrusionRate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -175,7 +175,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Message {
             get {
-                object obj = ResourceManager.GetObject("Action_Message", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Message", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -185,7 +185,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_MotionMode {
             get {
-                object obj = ResourceManager.GetObject("Action_MotionMode", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.MotionMode", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -195,7 +195,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Move {
             get {
-                object obj = ResourceManager.GetObject("Action_Move", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Move", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -205,7 +205,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_PopSettings {
             get {
-                object obj = ResourceManager.GetObject("Action_PopSettings", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.PopSettings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -215,7 +215,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Precision {
             get {
-                object obj = ResourceManager.GetObject("Action_Precision", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Precision", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -225,7 +225,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_PushSettings {
             get {
-                object obj = ResourceManager.GetObject("Action_PushSettings", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.PushSettings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -235,7 +235,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Rotate {
             get {
-                object obj = ResourceManager.GetObject("Action_Rotate", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Rotate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -245,7 +245,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Speed {
             get {
-                object obj = ResourceManager.GetObject("Action_Speed", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Speed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -255,7 +255,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Temperature {
             get {
-                object obj = ResourceManager.GetObject("Action_Temperature", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Temperature", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -265,7 +265,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Transform {
             get {
-                object obj = ResourceManager.GetObject("Action_Transform", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Transform", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -275,7 +275,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_Wait {
             get {
-                object obj = ResourceManager.GetObject("Action_Wait", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.Wait", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -285,7 +285,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_WriteAnalog {
             get {
-                object obj = ResourceManager.GetObject("Action_WriteAnalog", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.WriteAnalog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -295,7 +295,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Action_WriteDigital {
             get {
-                object obj = ResourceManager.GetObject("Action_WriteDigital", resourceCulture);
+                object obj = ResourceManager.GetObject("Action.WriteDigital", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -305,7 +305,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_ActionExecuted {
             get {
-                object obj = ResourceManager.GetObject("Bridge_ActionExecuted", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.ActionExecuted", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -315,7 +315,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_ActionIssued {
             get {
-                object obj = ResourceManager.GetObject("Bridge_ActionIssued", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.ActionIssued", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -325,7 +325,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_ActionReleased {
             get {
-                object obj = ResourceManager.GetObject("Bridge_ActionReleased", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.ActionReleased", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -335,7 +335,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_Connect {
             get {
-                object obj = ResourceManager.GetObject("Bridge_Connect", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.Connect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -345,7 +345,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_Listen {
             get {
-                object obj = ResourceManager.GetObject("Bridge_Listen", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.Listen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -355,7 +355,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_MotionUpdate {
             get {
-                object obj = ResourceManager.GetObject("Bridge_MotionUpdate", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.MotionUpdate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -365,7 +365,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Bridge_Send {
             get {
-                object obj = ResourceManager.GetObject("Bridge_Send", resourceCulture);
+                object obj = ResourceManager.GetObject("Bridge.Send", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -375,7 +375,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Machina_Head {
             get {
-                object obj = ResourceManager.GetObject("Machina_Head", resourceCulture);
+                object obj = ResourceManager.GetObject("Machina.Head", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -385,7 +385,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Machina_Robot {
             get {
-                object obj = ResourceManager.GetObject("Machina_Robot", resourceCulture);
+                object obj = ResourceManager.GetObject("Machina.Robot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -395,7 +395,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Program_Compile {
             get {
-                object obj = ResourceManager.GetObject("Program_Compile", resourceCulture);
+                object obj = ResourceManager.GetObject("Program.Compile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -405,7 +405,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Program_Display {
             get {
-                object obj = ResourceManager.GetObject("Program_Display", resourceCulture);
+                object obj = ResourceManager.GetObject("Program.Display", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -415,7 +415,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Program_Save {
             get {
-                object obj = ResourceManager.GetObject("Program_Save", resourceCulture);
+                object obj = ResourceManager.GetObject("Program.Save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -425,7 +425,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Robot_Create {
             get {
-                object obj = ResourceManager.GetObject("Robot_Create", resourceCulture);
+                object obj = ResourceManager.GetObject("Robot.Create", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -435,7 +435,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Robot_Logger {
             get {
-                object obj = ResourceManager.GetObject("Robot_Logger", resourceCulture);
+                object obj = ResourceManager.GetObject("Robot.Logger", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -445,7 +445,7 @@ namespace MachinaGrasshopper.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Robot_Version {
             get {
-                object obj = ResourceManager.GetObject("Robot_Version", resourceCulture);
+                object obj = ResourceManager.GetObject("Robot.Version", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

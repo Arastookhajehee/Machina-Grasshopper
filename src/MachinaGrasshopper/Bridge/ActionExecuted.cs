@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 using Rhino.Geometry;
 using Grasshopper.Kernel;
@@ -45,8 +46,6 @@ namespace MachinaGrasshopper.Bridge
         private double?[] _axes;
         private double?[] _externalAxes;
 
-        private JavaScriptSerializer _serializer;
-
         public ActionExecuted() : base(
             "ActionExecuted",
             "ActionExecuted",
@@ -55,7 +54,6 @@ namespace MachinaGrasshopper.Bridge
             "Bridge")
         {
             //_updateOutputs = true;
-            _serializer = new JavaScriptSerializer();
             _receivedMessages = new List<string>();
         }
 
@@ -163,7 +161,7 @@ namespace MachinaGrasshopper.Bridge
                 DA.SetData(4, _pendingExecutionTotal);
                 DA.SetData(5, _pendingExecutionOnDevice);
             }
- 
+
         }
 
         /// <summary>
@@ -177,24 +175,37 @@ namespace MachinaGrasshopper.Bridge
 
             try
             {
-                dynamic json = _serializer.Deserialize<dynamic>(msg);
-                string eType = json["event"];
-                if (eType.Equals(EVENT_NAME))
+                JObject json = JsonConvert.DeserializeObject<JObject>(msg);
+
+                if (json == null)
+                    throw new JsonException("Deserialized JSON is null.");
+
+                string eType = json.Value<string>("event");
+
+                if (string.Equals(eType, EVENT_NAME, StringComparison.Ordinal))
                 {
-                    _id = json["id"];
-                    if (_id != _prevId)
+                    int id = json.Value<int>("id");
+
+                    if (id != _prevId)
                     {
+                        _id = id;
                         UpdateCurrentValues(json);
                         _prevId = _id;
                         return true;
                     }
                 }
             }
-            catch (Exception ex)
+            catch (JsonException ex)
             {
-                string err = "Something went wrong parsing \"" + msg + "\": " + ex;
+                string err = "JSON parsing error for \"" + msg + "\": " + ex.Message;
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, err);
             }
+            catch (Exception ex)
+            {
+                string err = "Unexpected error while parsing \"" + msg + "\": " + ex;
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, err);
+            }
+
 
             // If here, values were not updated
             return false;
@@ -209,8 +220,8 @@ namespace MachinaGrasshopper.Bridge
             // @TODO: make this more programmatic, tie it to ActionExecutedArgs props
             _instruction = json["last"];
 
-            var pos = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["pos"]);
-            var ori = Machina.Utilities.Conversion.NullableDoublesFromObjects(json["ori"]);
+            var pos = Machina.Utilities.Conversion.ToNullableDoubles(json["pos"]);
+            var ori = Machina.Utilities.Conversion.ToNullableDoubles(json["ori"]);
             if (pos == null || ori == null)
             {
                 _tcp = Plane.Unset;
