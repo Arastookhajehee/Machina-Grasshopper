@@ -143,7 +143,7 @@ namespace MachinaGrasshopper.Bridge
 
                     // If values are new, schedule new solution
                     if (!Machina.Utilities.Numeric.AreSimilar(_axes, _prevAxes, SIMILARITY_EPSILON) ||
-                        !Machina.Utilities.Numeric.AreSimilar(_externalAxes, _externalAxes, SIMILARITY_EPSILON) ||
+                        !Machina.Utilities.Numeric.AreSimilar(_externalAxes, _prevExternalxes, SIMILARITY_EPSILON) ||
                         !GH_Helpers.AreSimilar(_tcp, _prevTcp, SIMILARITY_EPSILON)) // TCP change check
                     {
                         return true;
