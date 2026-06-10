@@ -10,7 +10,7 @@ namespace MachinaGrasshopper.Action
         public SyncCurrent() : base(
             "SyncCurrent",
             "SyncCurrent",
-            "Creates a SyncCurrent action marker that is streamed through the normal Machina action pipeline.",
+            "Creates a SyncCurrent action. Send this action alone in its own batch so Machina can refresh its internal state from the physical robot before subsequent actions.",
             "Machina",
             "Action")
         { }
